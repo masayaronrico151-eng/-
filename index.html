@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badminton 2024 Kanagawa Gakuen - Cute Edition</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 25%, #e8eaf6 50%, #e0f7fa 75%, #fff9c4 100%);
+    min-height: 100vh;
+    font-family: 'M PLUS Rounded 1c', 'Nunito', sans-serif;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #e91e63;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 rgba(233,30,99,0.1);
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #9c27b0;
+    font-size: 1rem;
+    margin-bottom: 40px;
+  }
+
+  .comparison {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+  }
+
+  .comparison h2 {
+    font-size: 1.5rem;
+    color: #7b1fa2;
+    margin-bottom: 20px;
+  }
+
+  .tshirt-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .tshirt-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tshirt-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff6b9d, #c084fc, #60a5fa, #34d399);
+    border-radius: 26px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tshirt-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  }
+
+  .tshirt-card:hover::before {
+    opacity: 1;
+  }
+
+  .tshirt-card h3 {
+    text-align: center;
+    margin-top: 12px;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    animation: sparkle-float 3s ease-in-out infinite;
+    font-size: 1.5rem;
+    opacity: 0.6;
+    z-index: 0;
+  }
+
+  @keyframes sparkle-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+    50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .kawaii-eyes { animation: bounce 2s ease-in-out infinite; }
+  .star-deco { animation: twinkle 1.5s ease-in-out infinite; }
+  .star-deco:nth-child(2) { animation-delay: 0.5s; }
+  .star-deco:nth-child(3) { animation-delay: 1s; }
+
+  .heart-float {
+    animation: heart-up 3s ease-in-out infinite;
+  }
+
+  @keyframes heart-up {
+    0% { transform: translateY(0) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-8px) scale(1.1); opacity: 1; }
+    100% { transform: translateY(0) scale(1); opacity: 0.7; }
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #9ca3af;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating sparkles background -->
+<div class="sparkle" style="top:10%;left:5%;animation-delay:0s">&#10024;</div>
+<div class="sparkle" style="top:20%;left:85%;animation-delay:0.5s">&#11088;</div>
+<div class="sparkle" style="top:50%;left:10%;animation-delay:1s">&#10024;</div>
+<div class="sparkle" style="top:70%;left:90%;animation-delay:1.5s">&#11088;</div>
+<div class="sparkle" style="top:30%;left:50%;animation-delay:2s">&#10024;</div>
+<div class="sparkle" style="top:80%;left:30%;animation-delay:0.8s">&#127775;</div>
+<div class="sparkle" style="top:15%;left:70%;animation-delay:1.2s">&#127775;</div>
+
+<h1>&#127992; Badminton 2024 &#127992;</h1>
+<p class="subtitle">Kanagawa Gakuen - Kawaii Edition &#10024;</p>
+
+<div class="tshirt-grid">
+
+  <!-- Black T-shirt -->
+  <div class="tshirt-card">
+    <svg width="280" height="340" viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg">
+      <!-- T-shirt shape -->
+      <defs>
+        <linearGradient id="black-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#2d2d2d"/>
+          <stop offset="100%" style="stop-color:#1a1a1a"/>
+        </linearGradient>
+        <filter id="glow-pink">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="soft-shadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#00000030"/>
+        </filter>
+      </defs>
+
+      <!-- T-shirt body -->
+      <path d="M60,45 L20,80 L45,105 L65,85 L65,310 Q65,325 80,325 L200,325 Q215,325 215,310 L215,85 L235,105 L260,80 L220,45 Q190,30 140,30 Q90,30 60,45 Z"
+        fill="url(#black-grad)" stroke="#444" stroke-width="1.5"/>
+
+      <!-- Collar -->
+      <path d="M100,35 Q140,55 180,35" fill="none" stroke="#555" stroke-width="2"/>
+
+      <!-- Cute Shuttlecock with kawaii face -->
+      <g transform="translate(100, 80) scale(0.85)">
+        <!-- Feather skirt with gradient -->
+        <g opacity="0.9">
+          <path d="M80,40 Q120,-10 150,30 Q130,50 100,60 Z" fill="#ff8fab" stroke="#ff6b9d" stroke-width="1"/>
+          <path d="M70,55 Q95,-5 140,25 Q125,55 90,70 Z" fill="#ffa5c0" stroke="#ff8fab" stroke-width="1"/>
+          <path d="M60,70 Q80,10 130,35 Q115,65 80,80 Z" fill="#ffb7d0" stroke="#ffa5c0" stroke-width="1"/>
+          <path d="M55,85 Q65,30 120,50 Q108,75 72,92 Z" fill="#ffc9de" stroke="#ffb7d0" stroke-width="1"/>
+          <path d="M52,100 Q55,50 110,65 Q100,88 65,105 Z" fill="#ffdbe8" stroke="#ffc9de" stroke-width="1"/>
+        </g>
+
+        <!-- Cork base (round head) -->
+        <circle cx="50" cy="110" r="32" fill="#ffe0ec" stroke="#ff8fab" stroke-width="2"/>
+        <circle cx="50" cy="110" r="28" fill="#fff0f5"/>
+
+        <!-- Kawaii face -->
+        <g class="kawaii-eyes">
+          <!-- Eyes -->
+          <ellipse cx="38" cy="106" rx="6" ry="7" fill="#2d2d2d"/>
+          <ellipse cx="62" cy="106" rx="6" ry="7" fill="#2d2d2d"/>
+          <!-- Eye shine -->
+          <circle cx="36" cy="103" r="2.5" fill="white"/>
+          <circle cx="60" cy="103" r="2.5" fill="white"/>
+          <circle cx="40" cy="108" r="1.2" fill="white"/>
+          <circle cx="64" cy="108" r="1.2" fill="white"/>
+        </g>
+        <!-- Blush -->
+        <ellipse cx="28" cy="116" rx="8" ry="4" fill="#ff8fab" opacity="0.5"/>
+        <ellipse cx="72" cy="116" rx="8" ry="4" fill="#ff8fab" opacity="0.5"/>
+        <!-- Smile -->
+        <path d="M42,118 Q50,127 58,118" fill="none" stroke="#ff6b9d" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- Little crown -->
+        <g transform="translate(50, 72)">
+          <polygon points="0,-12 -15,2 -10,2 -8,-5 -3,2 0,-8 3,2 8,-5 10,2 15,2" fill="#ffd700" stroke="#ffb300" stroke-width="0.5"/>
+          <circle cx="-8" cy="-5" r="2" fill="#ff6b9d"/>
+          <circle cx="0" cy="-10" r="2" fill="#c084fc"/>
+          <circle cx="8" cy="-5" r="2" fill="#60a5fa"/>
+        </g>
+      </g>
+
+      <!-- Cute player silhouette -->
+      <g transform="translate(80, 130)" fill="#ff8fab" filter="url(#glow-pink)">
+        <!-- Simplified cute player figure -->
+        <circle cx="18" cy="8" r="7" fill="#ffa5c0"/>
+        <path d="M10,16 Q8,30 12,40 L24,40 Q28,30 26,16 Z" fill="#ffa5c0"/>
+        <!-- Arm with racket -->
+        <path d="M26,20 L40,8 L48,3" fill="none" stroke="#ffa5c0" stroke-width="3" stroke-linecap="round"/>
+        <!-- Racket -->
+        <ellipse cx="52" cy="0" rx="7" ry="9" fill="none" stroke="#ffc9de" stroke-width="1.5" transform="rotate(-20,52,0)"/>
+        <!-- Legs -->
+        <line x1="14" y1="40" x2="8" y2="56" stroke="#ffa5c0" stroke-width="3" stroke-linecap="round"/>
+        <line x1="22" y1="40" x2="28" y2="56" stroke="#ffa5c0" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Text "badminton" in cute style -->
+      <text x="140" y="230" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="900" font-size="28" fill="#ff8fab" filter="url(#glow-pink)">badminton</text>
+
+      <!-- Subtext -->
+      <text x="140" y="252" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="700" font-size="11" fill="#ffa5c0">2024 Kanagawa Gakuen</text>
+
+      <!-- Decorative hearts -->
+      <g class="heart-float">
+        <text x="200" y="195" font-size="14" fill="#ff6b9d" opacity="0.8">&#9829;</text>
+      </g>
+      <g class="heart-float" style="animation-delay: 0.7s">
+        <text x="80" y="265" font-size="10" fill="#c084fc" opacity="0.7">&#9829;</text>
+      </g>
+      <g class="heart-float" style="animation-delay: 1.4s">
+        <text x="215" y="240" font-size="12" fill="#60a5fa" opacity="0.7">&#9829;</text>
+      </g>
+
+      <!-- Stars -->
+      <g class="star-deco">
+        <text x="195" y="165" font-size="10" fill="#ffd700">&#10022;</text>
+      </g>
+      <g class="star-deco">
+        <text x="75" y="210" font-size="8" fill="#ffd700">&#10022;</text>
+      </g>
+
+      <!-- Sparkle accents -->
+      <text x="210" y="275" font-size="9" fill="#ff8fab" class="star-deco" style="animation-delay:0.3s">&#10023;</text>
+      <text x="70" y="290" font-size="7" fill="#c084fc" class="star-deco" style="animation-delay:0.9s">&#10023;</text>
+    </svg>
+    <h3>Black - Kawaii Edition</h3>
+  </div>
+
+  <!-- Navy T-shirt -->
+  <div class="tshirt-card">
+    <svg width="280" height="340" viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="navy-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e3a5f"/>
+          <stop offset="100%" style="stop-color:#152a45"/>
+        </linearGradient>
+        <filter id="glow-blue">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <path d="M60,45 L20,80 L45,105 L65,85 L65,310 Q65,325 80,325 L200,325 Q215,325 215,310 L215,85 L235,105 L260,80 L220,45 Q190,30 140,30 Q90,30 60,45 Z"
+        fill="url(#navy-grad)" stroke="#2d5a8e" stroke-width="1.5"/>
+      <path d="M100,35 Q140,55 180,35" fill="none" stroke="#2d5a8e" stroke-width="2"/>
+
+      <g transform="translate(100, 80) scale(0.85)">
+        <g opacity="0.9">
+          <path d="M80,40 Q120,-10 150,30 Q130,50 100,60 Z" fill="#93c5fd" stroke="#60a5fa" stroke-width="1"/>
+          <path d="M70,55 Q95,-5 140,25 Q125,55 90,70 Z" fill="#a5d0fe" stroke="#93c5fd" stroke-width="1"/>
+          <path d="M60,70 Q80,10 130,35 Q115,65 80,80 Z" fill="#b8dbfe" stroke="#a5d0fe" stroke-width="1"/>
+          <path d="M55,85 Q65,30 120,50 Q108,75 72,92 Z" fill="#cae5ff" stroke="#b8dbfe" stroke-width="1"/>
+          <path d="M52,100 Q55,50 110,65 Q100,88 65,105 Z" fill="#dceeff" stroke="#cae5ff" stroke-width="1"/>
+        </g>
+
+        <circle cx="50" cy="110" r="32" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+        <circle cx="50" cy="110" r="28" fill="#eff6ff"/>
+
+        <g class="kawaii-eyes">
+          <ellipse cx="38" cy="106" rx="6" ry="7" fill="#1e3a5f"/>
+          <ellipse cx="62" cy="106" rx="6" ry="7" fill="#1e3a5f"/>
+          <circle cx="36" cy="103" r="2.5" fill="white"/>
+          <circle cx="60" cy="103" r="2.5" fill="white"/>
+          <circle cx="40" cy="108" r="1.2" fill="white"/>
+          <circle cx="64" cy="108" r="1.2" fill="white"/>
+        </g>
+        <ellipse cx="28" cy="116" rx="8" ry="4" fill="#93c5fd" opacity="0.5"/>
+        <ellipse cx="72" cy="116" rx="8" ry="4" fill="#93c5fd" opacity="0.5"/>
+        <path d="M42,118 Q50,127 58,118" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- Star hair accessory -->
+        <g transform="translate(50, 74)">
+          <polygon points="0,-14 -4,-4 -14,-4 -6,2 -9,12 0,6 9,12 6,2 14,-4 4,-4" fill="#ffd700" stroke="#ffb300" stroke-width="0.5" transform="scale(0.8)"/>
+        </g>
+      </g>
+
+      <g transform="translate(80, 130)" fill="#93c5fd" filter="url(#glow-blue)">
+        <circle cx="18" cy="8" r="7" fill="#a5d0fe"/>
+        <path d="M10,16 Q8,30 12,40 L24,40 Q28,30 26,16 Z" fill="#a5d0fe"/>
+        <path d="M26,20 L40,8 L48,3" fill="none" stroke="#a5d0fe" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="52" cy="0" rx="7" ry="9" fill="none" stroke="#cae5ff" stroke-width="1.5" transform="rotate(-20,52,0)"/>
+        <line x1="14" y1="40" x2="8" y2="56" stroke="#a5d0fe" stroke-width="3" stroke-linecap="round"/>
+        <line x1="22" y1="40" x2="28" y2="56" stroke="#a5d0fe" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <text x="140" y="230" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="900" font-size="28" fill="#93c5fd" filter="url(#glow-blue)">badminton</text>
+      <text x="140" y="252" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="700" font-size="11" fill="#a5d0fe">2024 Kanagawa Gakuen</text>
+
+      <g class="heart-float">
+        <text x="200" y="195" font-size="14" fill="#60a5fa" opacity="0.8">&#9829;</text>
+      </g>
+      <g class="heart-float" style="animation-delay: 0.7s">
+        <text x="80" y="265" font-size="10" fill="#93c5fd" opacity="0.7">&#9829;</text>
+      </g>
+      <g class="star-deco">
+        <text x="195" y="165" font-size="10" fill="#ffd700">&#10022;</text>
+      </g>
+      <text x="210" y="275" font-size="9" fill="#93c5fd" class="star-deco" style="animation-delay:0.3s">&#10023;</text>
+    </svg>
+    <h3>Navy - Kawaii Edition</h3>
+  </div>
+
+  <!-- Blue T-shirt -->
+  <div class="tshirt-card">
+    <svg width="280" height="340" viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#2563eb"/>
+          <stop offset="100%" style="stop-color:#1d4ed8"/>
+        </linearGradient>
+        <filter id="glow-white">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <path d="M60,45 L20,80 L45,105 L65,85 L65,310 Q65,325 80,325 L200,325 Q215,325 215,310 L215,85 L235,105 L260,80 L220,45 Q190,30 140,30 Q90,30 60,45 Z"
+        fill="url(#blue-grad)" stroke="#3b82f6" stroke-width="1.5"/>
+      <path d="M100,35 Q140,55 180,35" fill="none" stroke="#3b82f6" stroke-width="2"/>
+
+      <g transform="translate(100, 80) scale(0.85)">
+        <g opacity="0.9">
+          <path d="M80,40 Q120,-10 150,30 Q130,50 100,60 Z" fill="#fde68a" stroke="#fbbf24" stroke-width="1"/>
+          <path d="M70,55 Q95,-5 140,25 Q125,55 90,70 Z" fill="#fef08a" stroke="#fde68a" stroke-width="1"/>
+          <path d="M60,70 Q80,10 130,35 Q115,65 80,80 Z" fill="#fef9c3" stroke="#fef08a" stroke-width="1"/>
+          <path d="M55,85 Q65,30 120,50 Q108,75 72,92 Z" fill="#fffbeb" stroke="#fef9c3" stroke-width="1"/>
+          <path d="M52,100 Q55,50 110,65 Q100,88 65,105 Z" fill="#fffef0" stroke="#fffbeb" stroke-width="1"/>
+        </g>
+
+        <circle cx="50" cy="110" r="32" fill="#fef9c3" stroke="#fbbf24" stroke-width="2"/>
+        <circle cx="50" cy="110" r="28" fill="#fffef0"/>
+
+        <g class="kawaii-eyes">
+          <!-- Closed happy eyes (^_^) -->
+          <path d="M32,106 Q38,99 44,106" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M56,106 Q62,99 68,106" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <ellipse cx="28" cy="112" rx="8" ry="4" fill="#fbbf24" opacity="0.4"/>
+        <ellipse cx="72" cy="112" rx="8" ry="4" fill="#fbbf24" opacity="0.4"/>
+        <path d="M42,116 Q50,125 58,116" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- Bow -->
+        <g transform="translate(75, 90)">
+          <path d="M0,0 Q-12,-10 -8,-2 Q-12,6 0,0" fill="#ff6b9d" stroke="#e91e63" stroke-width="0.5"/>
+          <path d="M0,0 Q12,-10 8,-2 Q12,6 0,0" fill="#ff6b9d" stroke="#e91e63" stroke-width="0.5"/>
+          <circle cx="0" cy="0" r="2.5" fill="#e91e63"/>
+        </g>
+      </g>
+
+      <g transform="translate(80, 130)" fill="white" filter="url(#glow-white)" opacity="0.9">
+        <circle cx="18" cy="8" r="7"/>
+        <path d="M10,16 Q8,30 12,40 L24,40 Q28,30 26,16 Z"/>
+        <path d="M26,20 L40,8 L48,3" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="52" cy="0" rx="7" ry="9" fill="none" stroke="white" stroke-width="1.5" transform="rotate(-20,52,0)"/>
+        <line x1="14" y1="40" x2="8" y2="56" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line x1="22" y1="40" x2="28" y2="56" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <text x="140" y="230" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="900" font-size="28" fill="white" filter="url(#glow-white)">badminton</text>
+      <text x="140" y="252" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="700" font-size="11" fill="#dbeafe">2024 Kanagawa Gakuen</text>
+
+      <g class="heart-float" style="animation-delay: 0.3s">
+        <text x="200" y="195" font-size="14" fill="#fbbf24" opacity="0.8">&#9829;</text>
+      </g>
+      <g class="star-deco">
+        <text x="78" y="270" font-size="10" fill="#ffd700">&#10022;</text>
+      </g>
+      <text x="210" y="270" font-size="9" fill="white" class="star-deco" style="animation-delay:0.6s">&#10023;</text>
+    </svg>
+    <h3>Blue - Kawaii Edition</h3>
+  </div>
+
+  <!-- Light Blue T-shirt -->
+  <div class="tshirt-card">
+    <svg width="280" height="340" viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lightblue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#bfdbfe"/>
+          <stop offset="100%" style="stop-color:#a5c8f0"/>
+        </linearGradient>
+        <filter id="glow-purple">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <path d="M60,45 L20,80 L45,105 L65,85 L65,310 Q65,325 80,325 L200,325 Q215,325 215,310 L215,85 L235,105 L260,80 L220,45 Q190,30 140,30 Q90,30 60,45 Z"
+        fill="url(#lightblue-grad)" stroke="#93b8e0" stroke-width="1.5"/>
+      <!-- Cute collar with different color -->
+      <path d="M100,35 Q140,55 180,35" fill="none" stroke="#60a5fa" stroke-width="2.5"/>
+
+      <g transform="translate(100, 80) scale(0.85)">
+        <g opacity="0.9">
+          <path d="M80,40 Q120,-10 150,30 Q130,50 100,60 Z" fill="#c084fc" stroke="#a855f7" stroke-width="1"/>
+          <path d="M70,55 Q95,-5 140,25 Q125,55 90,70 Z" fill="#d0a0fd" stroke="#c084fc" stroke-width="1"/>
+          <path d="M60,70 Q80,10 130,35 Q115,65 80,80 Z" fill="#ddb8fe" stroke="#d0a0fd" stroke-width="1"/>
+          <path d="M55,85 Q65,30 120,50 Q108,75 72,92 Z" fill="#e9d0ff" stroke="#ddb8fe" stroke-width="1"/>
+          <path d="M52,100 Q55,50 110,65 Q100,88 65,105 Z" fill="#f3e8ff" stroke="#e9d0ff" stroke-width="1"/>
+        </g>
+
+        <circle cx="50" cy="110" r="32" fill="#f3e8ff" stroke="#c084fc" stroke-width="2"/>
+        <circle cx="50" cy="110" r="28" fill="#faf5ff"/>
+
+        <g class="kawaii-eyes">
+          <!-- Star eyes! -->
+          <g transform="translate(38, 106)">
+            <polygon points="0,-6 -2,-2 -6,-2 -3,1 -4,5 0,3 4,5 3,1 6,-2 2,-2" fill="#a855f7"/>
+          </g>
+          <g transform="translate(62, 106)">
+            <polygon points="0,-6 -2,-2 -6,-2 -3,1 -4,5 0,3 4,5 3,1 6,-2 2,-2" fill="#a855f7"/>
+          </g>
+        </g>
+        <ellipse cx="28" cy="116" rx="8" ry="4" fill="#c084fc" opacity="0.4"/>
+        <ellipse cx="72" cy="116" rx="8" ry="4" fill="#c084fc" opacity="0.4"/>
+        <!-- Open happy mouth -->
+        <ellipse cx="50" cy="120" rx="6" ry="5" fill="#a855f7" opacity="0.3"/>
+        <path d="M44,118 Q50,128 56,118" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- Flower accessory -->
+        <g transform="translate(78, 88)">
+          <circle cx="0" cy="-6" r="4" fill="#ff8fab" opacity="0.8"/>
+          <circle cx="5" cy="-2" r="4" fill="#ff8fab" opacity="0.8"/>
+          <circle cx="3" cy="4" r="4" fill="#ff8fab" opacity="0.8"/>
+          <circle cx="-3" cy="4" r="4" fill="#ff8fab" opacity="0.8"/>
+          <circle cx="-5" cy="-2" r="4" fill="#ff8fab" opacity="0.8"/>
+          <circle cx="0" cy="0" r="3" fill="#ffd700"/>
+        </g>
+      </g>
+
+      <g transform="translate(80, 130)" fill="#7c3aed" filter="url(#glow-purple)" opacity="0.7">
+        <circle cx="18" cy="8" r="7"/>
+        <path d="M10,16 Q8,30 12,40 L24,40 Q28,30 26,16 Z"/>
+        <path d="M26,20 L40,8 L48,3" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="52" cy="0" rx="7" ry="9" fill="none" stroke="#7c3aed" stroke-width="1.5" transform="rotate(-20,52,0)"/>
+        <line x1="14" y1="40" x2="8" y2="56" stroke="#7c3aed" stroke-width="3" stroke-linecap="round"/>
+        <line x1="22" y1="40" x2="28" y2="56" stroke="#7c3aed" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <text x="140" y="230" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="900" font-size="28" fill="#7c3aed" filter="url(#glow-purple)">badminton</text>
+      <text x="140" y="252" text-anchor="middle" font-family="'Nunito','M PLUS Rounded 1c',sans-serif" font-weight="700" font-size="11" fill="#a78bfa">2024 Kanagawa Gakuen</text>
+
+      <g class="heart-float" style="animation-delay: 1s">
+        <text x="198" y="200" font-size="14" fill="#c084fc" opacity="0.8">&#9829;</text>
+      </g>
+      <g class="heart-float" style="animation-delay: 0.4s">
+        <text x="82" y="272" font-size="10" fill="#ff8fab" opacity="0.7">&#9829;</text>
+      </g>
+      <g class="star-deco" style="animation-delay: 0.2s">
+        <text x="208" y="268" font-size="10" fill="#ffd700">&#10022;</text>
+      </g>
+    </svg>
+    <h3>Light Blue - Kawaii Edition</h3>
+  </div>
+
+</div>
+
+<p class="footer">Made with &#9829; | Badminton 2024 Kanagawa Gakuen - Kawaii Redesign</p>
+
+</body>
+</html>
