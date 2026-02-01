@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>探究の問いデザイナー - Inquiry Question Redesigner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --primary:#4f46e5;--primary-light:#818cf8;--primary-dark:#3730a3;
+    --accent:#f59e0b;--accent-light:#fbbf24;
+    --bg:#f8fafc;--surface:#ffffff;--surface-alt:#f1f5f9;
+    --text:#1e293b;--text-secondary:#64748b;--text-light:#94a3b8;
+    --border:#e2e8f0;--border-focus:#a5b4fc;
+    --success:#10b981;--success-bg:#ecfdf5;
+    --radius:12px;--radius-sm:8px;--radius-lg:16px;
+    --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+    --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
+    --shadow-lg:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);
+    --shadow-xl:0 20px 25px rgba(0,0,0,.1),0 10px 10px rgba(0,0,0,.04);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Noto Sans JP','M PLUS Rounded 1c',sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.7;
+    min-height:100vh;
+  }
+
+  /* ── Header ── */
+  .header{
+    background:linear-gradient(135deg,var(--primary),#7c3aed,#a855f7);
+    color:#fff;padding:2.5rem 1.5rem 2rem;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L35 20H50L38 30L42 45L30 35L18 45L22 30L10 20H25Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+    opacity:.5;
+  }
+  .header h1{
+    font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;
+    letter-spacing:.02em;position:relative;
+  }
+  .header h1 .icon{font-size:1.3em;vertical-align:middle;margin-right:.3em}
+  .header p{
+    font-size:clamp(.85rem,2vw,1rem);opacity:.85;
+    margin-top:.5rem;position:relative;font-weight:300;
+  }
+
+  /* ── Container ── */
+  .container{
+    max-width:860px;margin:0 auto;padding:1.5rem 1rem 4rem;
+  }
+
+  /* ── Section ── */
+  .section{margin-bottom:2rem}
+  .section-title{
+    font-size:1.05rem;font-weight:700;color:var(--primary-dark);
+    margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;
+  }
+  .section-title .badge{
+    background:var(--primary);color:#fff;
+    font-size:.7rem;padding:.15em .6em;border-radius:20px;
+    font-weight:500;letter-spacing:.05em;
+  }
+
+  /* ── Input Area ── */
+  .input-area{
+    background:var(--surface);border-radius:var(--radius-lg);
+    padding:1.5rem;box-shadow:var(--shadow);
+    border:2px solid var(--border);transition:border-color .2s;
+  }
+  .input-area:focus-within{border-color:var(--border-focus)}
+  .input-area label{
+    display:block;font-weight:500;margin-bottom:.5rem;
+    color:var(--text-secondary);font-size:.9rem;
+  }
+  .input-area textarea{
+    width:100%;min-height:100px;border:1px solid var(--border);
+    border-radius:var(--radius-sm);padding:.85rem 1rem;
+    font-family:inherit;font-size:1rem;line-height:1.7;
+    resize:vertical;color:var(--text);background:var(--surface-alt);
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .input-area textarea:focus{
+    outline:none;border-color:var(--primary-light);
+    box-shadow:0 0 0 3px rgba(79,70,229,.12);
+  }
+  .input-area textarea::placeholder{color:var(--text-light)}
+  .example-btn-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+  .example-btn{
+    background:var(--surface-alt);border:1px solid var(--border);
+    border-radius:20px;padding:.25rem .75rem;font-size:.78rem;
+    color:var(--text-secondary);cursor:pointer;transition:all .15s;
+    font-family:inherit;
+  }
+  .example-btn:hover{
+    background:var(--primary);color:#fff;border-color:var(--primary);
+  }
+
+  /* ── Perspective Grid ── */
+  .perspective-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:.75rem;
+  }
+  .perspective-card{
+    background:var(--surface);border:2px solid var(--border);
+    border-radius:var(--radius);padding:1rem 1rem .85rem;
+    cursor:pointer;transition:all .2s;position:relative;
+    user-select:none;
+  }
+  .perspective-card:hover{
+    border-color:var(--primary-light);
+    box-shadow:var(--shadow-md);transform:translateY(-1px);
+  }
+  .perspective-card.selected{
+    border-color:var(--primary);
+    background:linear-gradient(135deg,rgba(79,70,229,.04),rgba(168,85,247,.04));
+    box-shadow:0 0 0 3px rgba(79,70,229,.1);
+  }
+  .perspective-card .card-icon{
+    font-size:1.4rem;margin-bottom:.35rem;display:block;
+  }
+  .perspective-card .card-title{
+    font-weight:700;font-size:.92rem;color:var(--text);
+    margin-bottom:.2rem;
+  }
+  .perspective-card .card-desc{
+    font-size:.78rem;color:var(--text-secondary);line-height:1.5;
+  }
+  .perspective-card .check-mark{
+    position:absolute;top:.65rem;right:.65rem;
+    width:22px;height:22px;border-radius:50%;
+    border:2px solid var(--border);display:flex;
+    align-items:center;justify-content:center;
+    transition:all .2s;font-size:.7rem;color:transparent;
+  }
+  .perspective-card.selected .check-mark{
+    background:var(--primary);border-color:var(--primary);color:#fff;
+  }
+
+  /* ── Selection Summary ── */
+  .selection-summary{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:.5rem;margin-top:.75rem;
+  }
+  .selection-count{
+    font-size:.85rem;color:var(--text-secondary);
+  }
+  .selection-count strong{color:var(--primary);font-weight:700}
+  .select-actions{display:flex;gap:.4rem}
+  .select-actions button{
+    background:none;border:1px solid var(--border);border-radius:20px;
+    padding:.2rem .7rem;font-size:.75rem;cursor:pointer;
+    color:var(--text-secondary);font-family:inherit;transition:all .15s;
+  }
+  .select-actions button:hover{
+    background:var(--primary);color:#fff;border-color:var(--primary);
+  }
+
+  /* ── Generate Button ── */
+  .generate-section{text-align:center;margin:2rem 0}
+  .generate-btn{
+    background:linear-gradient(135deg,var(--primary),#7c3aed);
+    color:#fff;border:none;border-radius:var(--radius);
+    padding:.9rem 2.5rem;font-size:1.05rem;font-weight:700;
+    cursor:pointer;font-family:inherit;
+    box-shadow:var(--shadow-md);transition:all .2s;
+    letter-spacing:.03em;position:relative;overflow:hidden;
+  }
+  .generate-btn:hover{
+    transform:translateY(-2px);box-shadow:var(--shadow-lg);
+  }
+  .generate-btn:active{transform:translateY(0)}
+  .generate-btn:disabled{
+    opacity:.5;cursor:not-allowed;transform:none;
+  }
+  .generate-btn .spinner{
+    display:none;width:18px;height:18px;
+    border:2px solid rgba(255,255,255,.3);
+    border-top-color:#fff;border-radius:50%;
+    animation:spin .6s linear infinite;
+    margin-right:.5rem;vertical-align:middle;
+  }
+  .generate-btn.loading .spinner{display:inline-block}
+  .generate-btn.loading .btn-text{opacity:.8}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ── Results ── */
+  .results-area{display:none}
+  .results-area.visible{display:block}
+  .result-group{margin-bottom:1.5rem}
+  .result-group-header{
+    display:flex;align-items:center;gap:.5rem;
+    margin-bottom:.6rem;
+  }
+  .result-group-header .group-icon{font-size:1.2rem}
+  .result-group-header .group-title{
+    font-weight:700;font-size:.95rem;color:var(--primary-dark);
+  }
+  .result-card{
+    background:var(--surface);border-radius:var(--radius);
+    padding:1.1rem 1.2rem;margin-bottom:.6rem;
+    border-left:4px solid var(--primary-light);
+    box-shadow:var(--shadow);transition:all .2s;
+    animation:fadeSlideIn .4s ease both;
+  }
+  .result-card:hover{
+    box-shadow:var(--shadow-md);transform:translateX(3px);
+  }
+  .result-card .question-text{
+    font-size:1rem;font-weight:500;color:var(--text);
+    line-height:1.7;margin-bottom:.4rem;
+  }
+  .result-card .question-text::before{
+    content:'Q.';color:var(--primary);font-weight:900;
+    margin-right:.4rem;
+  }
+  .result-card .reasoning{
+    font-size:.8rem;color:var(--text-secondary);
+    line-height:1.6;padding-left:1.8rem;
+  }
+  .result-card .copy-btn{
+    display:inline-flex;align-items:center;gap:.3rem;
+    background:var(--surface-alt);border:1px solid var(--border);
+    border-radius:20px;padding:.2rem .65rem;font-size:.72rem;
+    color:var(--text-secondary);cursor:pointer;
+    font-family:inherit;transition:all .15s;margin-top:.4rem;
+    margin-left:1.8rem;
+  }
+  .result-card .copy-btn:hover{
+    background:var(--primary);color:#fff;border-color:var(--primary);
+  }
+  .result-card .copy-btn.copied{
+    background:var(--success);color:#fff;border-color:var(--success);
+  }
+  @keyframes fadeSlideIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .result-card:nth-child(2){animation-delay:.08s}
+  .result-card:nth-child(3){animation-delay:.16s}
+
+  /* ── Original Question Recall ── */
+  .original-recall{
+    background:var(--surface-alt);border-radius:var(--radius);
+    padding:1rem 1.2rem;margin-bottom:1.5rem;
+    border:1px dashed var(--border);
+  }
+  .original-recall .label{
+    font-size:.78rem;color:var(--text-light);font-weight:500;
+    margin-bottom:.2rem;
+  }
+  .original-recall .orig-text{
+    font-size:.95rem;color:var(--text-secondary);
+  }
+
+  /* ── Tips ── */
+  .tips-box{
+    background:linear-gradient(135deg,#fef3c7,#fef9c3);
+    border:1px solid #fde68a;border-radius:var(--radius);
+    padding:1rem 1.2rem;margin-top:2rem;
+  }
+  .tips-box .tips-title{
+    font-weight:700;font-size:.88rem;color:#92400e;
+    margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem;
+  }
+  .tips-box ul{
+    list-style:none;padding:0;
+  }
+  .tips-box li{
+    font-size:.82rem;color:#78350f;line-height:1.6;
+    padding:.15rem 0 .15rem 1.2rem;position:relative;
+  }
+  .tips-box li::before{
+    content:'';position:absolute;left:0;top:.65rem;
+    width:6px;height:6px;border-radius:50%;background:#f59e0b;
+  }
+
+  /* ── Footer ── */
+  .footer{
+    text-align:center;padding:2rem 1rem;
+    font-size:.78rem;color:var(--text-light);
+  }
+
+  /* ── Responsive ── */
+  @media(max-width:600px){
+    .container{padding:1rem .75rem 3rem}
+    .perspective-grid{grid-template-columns:1fr}
+    .input-area{padding:1rem}
+    .generate-btn{width:100%;padding:.85rem}
+  }
+
+  /* ── Print ── */
+  @media print{
+    .header{background:var(--primary)!important;-webkit-print-color-adjust:exact}
+    .generate-section,.example-btn-row,.copy-btn,.select-actions,.tips-box{display:none!important}
+    .results-area{display:block!important}
+    .result-card{break-inside:avoid;box-shadow:none;border:1px solid #ccc}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <h1><span class="icon">&#x1F50D;</span>探究の問いデザイナー</h1>
+  <p>問いのデザインの知見にもとづき、あなたの問いをより探究的に再提案します</p>
+</header>
+
+<main class="container">
+
+  <!-- ===== Step 1: Input ===== -->
+  <section class="section" id="step-input">
+    <div class="section-title">
+      <span class="badge">STEP 1</span>
+      あなたの問い（テーマ）を入力してください
+    </div>
+    <div class="input-area">
+      <label for="question-input">探究したい問いやテーマを入力</label>
+      <textarea id="question-input" placeholder="例：なぜ地球温暖化は進んでいるのか？&#10;例：AIは私たちの生活をどう変えるのか？&#10;例：地域の商店街はなぜ衰退しているのか？"></textarea>
+      <div class="example-btn-row">
+        <button class="example-btn" data-q="なぜ地球温暖化は進んでいるのか？">地球温暖化</button>
+        <button class="example-btn" data-q="AIは私たちの生活をどう変えるのか？">AIと生活</button>
+        <button class="example-btn" data-q="地域の商店街はなぜ衰退しているのか？">商店街の衰退</button>
+        <button class="example-btn" data-q="プラスチックごみを減らすにはどうすればよいか？">プラごみ削減</button>
+        <button class="example-btn" data-q="なぜ若者の投票率は低いのか？">若者の投票率</button>
+        <button class="example-btn" data-q="食品ロスはなぜなくならないのか？">食品ロス</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Step 2: Perspectives ===== -->
+  <section class="section" id="step-perspectives">
+    <div class="section-title">
+      <span class="badge">STEP 2</span>
+      問いを再デザインする観点を選んでください
+    </div>
+
+    <div class="perspective-grid" id="perspective-grid">
+      <!-- Cards are rendered by JS -->
+    </div>
+
+    <div class="selection-summary">
+      <div class="selection-count">
+        <strong id="selected-count">0</strong> 個の観点を選択中
+      </div>
+      <div class="select-actions">
+        <button id="btn-select-all">すべて選択</button>
+        <button id="btn-deselect-all">選択解除</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Generate ===== -->
+  <section class="generate-section">
+    <button class="generate-btn" id="generate-btn" disabled>
+      <span class="spinner"></span>
+      <span class="btn-text">問いを再デザインする</span>
+    </button>
+  </section>
+
+  <!-- ===== Results ===== -->
+  <section class="section results-area" id="results-area">
+    <div class="section-title">
+      <span class="badge">RESULT</span>
+      再デザインされた問い
+    </div>
+    <div class="original-recall">
+      <div class="label">あなたの元の問い</div>
+      <div class="orig-text" id="original-display"></div>
+    </div>
+    <div id="results-container"></div>
+  </section>
+
+  <!-- ===== Tips ===== -->
+  <div class="tips-box">
+    <div class="tips-title">&#x1F4A1; よりよい探究の問いにするヒント</div>
+    <ul>
+      <li>「はい/いいえ」で答えられない、オープンな問いを目指しましょう</li>
+      <li>「なぜ」「どのように」を含む問いは深い探究につながりやすいです</li>
+      <li>複数の観点を組み合わせると、多面的な問いが生まれます</li>
+      <li>問いを絞りすぎず、探究の過程で発展させることも大切です</li>
+      <li>自分が本当に知りたいこと・考えたいことを大切にしましょう</li>
+    </ul>
+  </div>
+</main>
+
+<footer class="footer">
+  探究の問いデザイナー &copy; 2026 &#8212; 問いのデザインの知見にもとづく探究学習支援ツール
+</footer>
+
+<script>
+// ============================================================
+// 探究の問いデザイナー - Core Logic
+// ============================================================
+
+// ── Perspective Definitions ──
+const PERSPECTIVES = [
+  {
+    id: 'deepen',
+    icon: '&#x1F9ED;',
+    title: '深化（原因・メカニズム）',
+    desc: '「なぜ」「どのように」で問いを深め、原因やしくみを探る',
+    color: '#4f46e5',
+    templates: [
+      { q: '{topic}の根本的な原因は何か？そしてそれらはどのように相互に関連しているのか？', r: '表面的な原因ではなく、複数の要因の構造的な関係を問うことで深い理解に導きます。' },
+      { q: '{topic}はどのようなメカニズム（しくみ）で起きているのか？', r: '現象の背後にある因果のしくみを明らかにする問いに変換しました。' },
+      { q: '{topic}について、表面的に見える原因の「さらに奥」にある要因は何か？', r: '一次的な原因にとどまらず、より深層の構造的要因を探る問いです。' },
+    ]
+  },
+  {
+    id: 'expand',
+    icon: '&#x1F310;',
+    title: '拡張（他分野・他地域への接続）',
+    desc: '他の分野・地域・事例とつなげて視野を広げる',
+    color: '#0891b2',
+    templates: [
+      { q: '{topic}と同様の現象は、他の分野（国・地域）ではどのように現れているか？', r: '特定の文脈を超えて、より広い視野で現象を捉える問いにしました。' },
+      { q: '{topic}は、一見無関係に見える他の社会課題とどのようにつながっているか？', r: '分野横断的な関連性を見出すことで、より統合的な理解を促します。' },
+      { q: '{topic}について、日本と海外の状況を比べると、どのような共通点と相違点があるか？', r: 'グローバルな視点を加えることで、問題の普遍性と特殊性を探ります。' },
+    ]
+  },
+  {
+    id: 'perspective_shift',
+    icon: '&#x1F504;',
+    title: '視点転換（立場を変える）',
+    desc: '異なるステークホルダーや立場から問い直す',
+    color: '#7c3aed',
+    templates: [
+      { q: '{topic}について、最も影響を受ける当事者の視点から見ると、何が本質的な問題なのか？', r: '問題の当事者の立場に立つことで、見落としていた側面を発見できます。' },
+      { q: '{topic}に対して、賛成派と反対派はそれぞれどのような根拠を持っているのか？', r: '対立する立場を並列に検討することで、多角的な理解を促します。' },
+      { q: 'もし自分が{topic}に関わる意思決定者だったら、何を最も重視すべきか？', r: '主体的な立場に立つことで、評価基準や優先順位を考える問いにしました。' },
+    ]
+  },
+  {
+    id: 'temporal',
+    icon: '&#x23F3;',
+    title: '時間軸（過去・現在・未来）',
+    desc: '歴史的経緯や将来展望の視点を加える',
+    color: '#059669',
+    templates: [
+      { q: '{topic}は歴史的にどのように変化してきたか？そしてその変化を引き起こした要因は何か？', r: '時間的な変遷を追うことで、現在の状況をより深く理解できます。' },
+      { q: '10年後・50年後、{topic}はどのように変わっている可能性があるか？その根拠は？', r: '未来予測を含む問いにすることで、トレンドや構造変化を考えさせます。' },
+      { q: '{topic}の「転換点」はいつ・何がきっかけで生まれたのか？', r: '歴史の中の重要な分岐点に注目することで、変化の本質を探ります。' },
+    ]
+  },
+  {
+    id: 'compare',
+    icon: '&#x2696;',
+    title: '比較（対比で本質を見る）',
+    desc: '他の事例・概念と比較して共通点や違いを明らかにする',
+    color: '#dc2626',
+    templates: [
+      { q: '{topic}が「うまくいっている事例」と「うまくいっていない事例」の決定的な違いは何か？', r: '成功と失敗を比較することで、重要な要因を浮かび上がらせます。' },
+      { q: '{topic}は、過去の類似した問題と比べて何が同じで何が新しいのか？', r: '歴史的な類似事例との比較で、問題の本質と時代性を明らかにします。' },
+      { q: '{topic}に対するアプローチA（例：規制）とアプローチB（例：技術革新）では、どちらがより効果的か？', r: '異なる解決策を比較検討する問いにすることで、具体的な考察を促します。' },
+    ]
+  },
+  {
+    id: 'hypothesis',
+    icon: '&#x1F9EA;',
+    title: '仮説生成（もし〜なら）',
+    desc: '仮説を立てて検証する問いにする',
+    color: '#ea580c',
+    templates: [
+      { q: 'もし{topic}に関する「定説」が間違っていたとしたら、どのような代替的な説明が考えられるか？', r: '既存の前提を疑い、新たな仮説を生成する問いです。' },
+      { q: 'もし{topic}に関して○○という条件が変わったら、結果はどう変わるか？', r: '変数を操作する思考実験で、因果関係を検証する問いにしました。' },
+      { q: '{topic}について「○○が原因である」という仮説を立てた場合、それを検証するにはどのようなデータが必要か？', r: '仮説検証のプロセス自体を問う、科学的探究の問いです。' },
+    ]
+  },
+  {
+    id: 'values',
+    icon: '&#x1F3DB;',
+    title: '価値・倫理（べき論を問う）',
+    desc: '「〜すべきか」「何が望ましいか」と価値判断を加える',
+    color: '#be185d',
+    templates: [
+      { q: '{topic}について、私たちは何を最も優先「すべき」か？その根拠は？', r: '事実の探究から一歩進み、価値判断とその根拠を問う問いにしました。' },
+      { q: '{topic}に関して、「効率」と「公平」が対立する場合、どのようにバランスをとるべきか？', r: '異なる価値観の対立を明示し、判断の基準を考えさせる問いです。' },
+      { q: '{topic}について、現在の世代と将来の世代の利益が異なる場合、どちらを優先すべきか？', r: '世代間倫理の観点を加え、持続可能性について考えさせます。' },
+    ]
+  },
+  {
+    id: 'concretize',
+    icon: '&#x1F3AF;',
+    title: '具体化（検証可能にする）',
+    desc: 'より具体的で調査・検証しやすい問いに絞る',
+    color: '#0284c7',
+    templates: [
+      { q: '{topic}について、具体的に○○（特定の地域・集団・時期）に絞って調べると、何がわかるか？', r: '対象を限定することで、実際に調査可能な問いにしました。' },
+      { q: '{topic}に関して、具体的にどのようなデータを集めれば、現状を客観的に把握できるか？', r: 'データ収集の方法を意識させる、実践的な問いです。' },
+      { q: '{topic}について、身近な事例（自分の学校・地域など）ではどのような状況にあるか？', r: '身近な具体例から探究を始めることで、実感を伴う学びにつなげます。' },
+    ]
+  },
+  {
+    id: 'abstract',
+    icon: '&#x1F4A0;',
+    title: '抽象化（普遍的な問いへ）',
+    desc: 'より一般的・本質的なレベルの問いに昇華する',
+    color: '#6d28d9',
+    templates: [
+      { q: '{topic}の背景にある、より根本的・普遍的な問いとは何か？', r: '個別の問題から一般的な原理や法則を探る問いに昇華しました。' },
+      { q: '{topic}は、「人間とは何か」「社会はどうあるべきか」という大きな問いとどうつながるか？', r: '哲学的・根源的な問いとの接続を意識させる問いです。' },
+      { q: '{topic}から見えてくる、現代社会に共通する構造的な課題は何か？', r: '個別事例を超えた社会構造レベルの問いに引き上げました。' },
+    ]
+  },
+  {
+    id: 'critical',
+    icon: '&#x1F914;',
+    title: '批判的思考（前提を疑う）',
+    desc: '当たり前とされていることや隠れた前提を問い直す',
+    color: '#b45309',
+    templates: [
+      { q: '{topic}について「当たり前」とされていることの中に、疑うべき前提はないか？', r: '暗黙の前提を明示化し、批判的に検討する問いです。' },
+      { q: '{topic}に関する情報は、誰が・どのような意図で発信しているのか？', r: '情報の発信者と意図を問うことで、メディアリテラシーを促します。' },
+      { q: '{topic}について広く信じられている「常識」は、本当にデータや根拠に裏付けられているか？', r: '根拠の有無を問い直すことで、エビデンスに基づく思考を促します。' },
+    ]
+  },
+  {
+    id: 'action',
+    icon: '&#x1F680;',
+    title: '実践・行動（解決策を考える）',
+    desc: '調べるだけでなく、具体的な行動や提案につなげる',
+    color: '#16a34a',
+    templates: [
+      { q: '{topic}を改善・解決するために、自分たちにできる具体的なアクションは何か？', r: '知識の獲得から実際の行動への橋渡しとなる問いにしました。' },
+      { q: '{topic}に対して、すでに効果を上げている取り組みがあるとすれば、それはなぜうまくいっているのか？', r: '成功事例から学び、実践に活かすための問いです。' },
+      { q: '{topic}について調べた結果を、誰に・どのように届ければ社会に影響を与えられるか？', r: '探究の成果を社会に還元する視点を加えた問いです。' },
+    ]
+  },
+  {
+    id: 'systemic',
+    icon: '&#x1F578;',
+    title: 'システム思考（全体構造を見る）',
+    desc: '要素間のつながりやフィードバックループに着目する',
+    color: '#475569',
+    templates: [
+      { q: '{topic}に関わるさまざまな要素（人・組織・制度・環境など）は、互いにどう影響し合っているか？', r: 'システム全体の相互作用を見る問いにすることで、複雑な構造を把握できます。' },
+      { q: '{topic}には、問題を悪化させる「悪循環」や、改善を促す「好循環」が存在するか？', r: 'フィードバックループに着目することで、介入ポイントを見つけやすくします。' },
+      { q: '{topic}を解決しようとしたとき、予期せぬ副作用や意図しない結果が起こる可能性はあるか？', r: 'システムの複雑性を意識し、介入の影響を多面的に考える問いです。' },
+    ]
+  },
+];
+
+// ── State ──
+let selectedPerspectives = new Set();
+
+// ── DOM Elements ──
+const questionInput = document.getElementById('question-input');
+const perspectiveGrid = document.getElementById('perspective-grid');
+const selectedCountEl = document.getElementById('selected-count');
+const generateBtn = document.getElementById('generate-btn');
+const resultsArea = document.getElementById('results-area');
+const resultsContainer = document.getElementById('results-container');
+const originalDisplay = document.getElementById('original-display');
+
+// ── Render Perspective Cards ──
+function renderPerspectives() {
+  perspectiveGrid.innerHTML = PERSPECTIVES.map(p => `
+    <div class="perspective-card" data-id="${p.id}">
+      <span class="card-icon">${p.icon}</span>
+      <div class="card-title">${p.title}</div>
+      <div class="card-desc">${p.desc}</div>
+      <div class="check-mark">&#x2713;</div>
+    </div>
+  `).join('');
+
+  perspectiveGrid.querySelectorAll('.perspective-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.id;
+      if (selectedPerspectives.has(id)) {
+        selectedPerspectives.delete(id);
+        card.classList.remove('selected');
+      } else {
+        selectedPerspectives.add(id);
+        card.classList.add('selected');
+      }
+      updateUI();
+    });
+  });
+}
+
+// ── Update UI State ──
+function updateUI() {
+  selectedCountEl.textContent = selectedPerspectives.size;
+  const hasQuestion = questionInput.value.trim().length > 0;
+  const hasPerspectives = selectedPerspectives.size > 0;
+  generateBtn.disabled = !(hasQuestion && hasPerspectives);
+}
+
+// ── Extract Topic from Question ──
+function extractTopic(question) {
+  // Clean up the question
+  let q = question.trim();
+  // Remove trailing punctuation
+  q = q.replace(/[？?。．.！!]+$/g, '');
+  // Remove common question patterns
+  const patterns = [
+    /^なぜ/,
+    /^どうして/,
+    /^どのように/,
+    /^どうすれば/,
+    /^いかにして/,
+    /はどうなるのか$/,
+    /のか$/,
+    /だろうか$/,
+    /か$/,
+    /のだろう$/,
+    /なのか$/,
+    /ているのか$/,
+    /ていくのか$/,
+    /すればよい$/,
+    /すべき$/,
+    /できる$/,
+    /とは何$/,
+  ];
+  let topic = q;
+  for (const pat of patterns) {
+    topic = topic.replace(pat, '');
+  }
+  // Remove particles at edges
+  topic = topic.replace(/^[はがをにでともからまでよりへ]+/, '');
+  topic = topic.replace(/[はがをにでともからまでよりへ]+$/, '');
+  // If topic is too short or empty, fall back to original
+  if (topic.length < 2) topic = q;
+  return topic.trim();
+}
+
+// ── Generate Redesigned Questions ──
+function generateQuestions() {
+  const rawQuestion = questionInput.value.trim();
+  if (!rawQuestion) return;
+
+  const topic = extractTopic(rawQuestion);
+  const results = [];
+
+  for (const pid of selectedPerspectives) {
+    const perspective = PERSPECTIVES.find(p => p.id === pid);
+    if (!perspective) continue;
+
+    const generated = perspective.templates.map(t => ({
+      question: t.q.replace(/\{topic\}/g, topic),
+      reasoning: t.r,
+    }));
+
+    results.push({
+      perspective,
+      questions: generated,
+    });
+  }
+
+  return { original: rawQuestion, results };
+}
+
+// ── Render Results ──
+function renderResults(data) {
+  originalDisplay.textContent = data.original;
+  resultsContainer.innerHTML = '';
+
+  data.results.forEach((group, gi) => {
+    const groupEl = document.createElement('div');
+    groupEl.className = 'result-group';
+    groupEl.style.animationDelay = `${gi * 0.1}s`;
+
+    let html = `
+      <div class="result-group-header">
+        <span class="group-icon">${group.perspective.icon}</span>
+        <span class="group-title">${group.perspective.title}</span>
+      </div>
+    `;
+
+    group.questions.forEach((item, qi) => {
+      html += `
+        <div class="result-card" style="animation-delay:${gi * 0.12 + qi * 0.06}s; border-left-color:${group.perspective.color}">
+          <div class="question-text">${escapeHtml(item.question)}</div>
+          <div class="reasoning">${escapeHtml(item.reasoning)}</div>
+          <button class="copy-btn" data-text="${escapeAttr(item.question)}">&#x1F4CB; コピー</button>
+        </div>
+      `;
+    });
+
+    groupEl.innerHTML = html;
+    resultsContainer.appendChild(groupEl);
+  });
+
+  resultsArea.classList.add('visible');
+  // Scroll to results
+  setTimeout(() => {
+    resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// ── Utilities ──
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+function escapeAttr(str) {
+  return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Event Listeners ──
+
+// Example buttons
+document.querySelectorAll('.example-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    questionInput.value = btn.dataset.q;
+    questionInput.focus();
+    updateUI();
+  });
+});
+
+// Input change
+questionInput.addEventListener('input', updateUI);
+
+// Select all / Deselect all
+document.getElementById('btn-select-all').addEventListener('click', () => {
+  PERSPECTIVES.forEach(p => selectedPerspectives.add(p.id));
+  perspectiveGrid.querySelectorAll('.perspective-card').forEach(c => c.classList.add('selected'));
+  updateUI();
+});
+document.getElementById('btn-deselect-all').addEventListener('click', () => {
+  selectedPerspectives.clear();
+  perspectiveGrid.querySelectorAll('.perspective-card').forEach(c => c.classList.remove('selected'));
+  updateUI();
+});
+
+// Generate button
+generateBtn.addEventListener('click', () => {
+  generateBtn.classList.add('loading');
+  generateBtn.disabled = true;
+
+  // Simulate brief processing delay for UX
+  setTimeout(() => {
+    const data = generateQuestions();
+    renderResults(data);
+    generateBtn.classList.remove('loading');
+    updateUI();
+  }, 400);
+});
+
+// Copy button delegation
+document.addEventListener('click', (e) => {
+  const copyBtn = e.target.closest('.copy-btn');
+  if (!copyBtn) return;
+  const text = copyBtn.dataset.text;
+  navigator.clipboard.writeText(text).then(() => {
+    copyBtn.classList.add('copied');
+    copyBtn.innerHTML = '&#x2705; コピー済み';
+    setTimeout(() => {
+      copyBtn.classList.remove('copied');
+      copyBtn.innerHTML = '&#x1F4CB; コピー';
+    }, 1500);
+  }).catch(() => {
+    // Fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    copyBtn.classList.add('copied');
+    copyBtn.innerHTML = '&#x2705; コピー済み';
+    setTimeout(() => {
+      copyBtn.classList.remove('copied');
+      copyBtn.innerHTML = '&#x1F4CB; コピー';
+    }, 1500);
+  });
+});
+
+// ── Initialize ──
+renderPerspectives();
+updateUI();
+
+</script>
+</body>
+</html>
